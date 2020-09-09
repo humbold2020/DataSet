@@ -1,31 +1,33 @@
 const smplBellCurve = (x, s) => {
-    let firstDevMinus = x - s;
-    let firstDevPlus = x + s;
-    let secondDevMinus = (2 * s) - x;
-    let secondDevPlus = (2 * s) + x;
-    let thirdDevMinus = (3 * s) - x;
-    let thirdDevPlus = (3 * s) + x; 
-    firstDevMinus = firstDevMinus.toFixed(2);
-    firstDevPlus = firstDevPlus.toFixed(2);
-    secondDevMinus = secondDevMinus.toFixed(2);
-    secondDevPlus = secondDevPlus.toFixed(2);
-    thirdDevMinus = thirdDevMinus.toFixed(2);
-    thirdDevPlus = thirdDevPlus.toFixed(2);
+    firstDevMinus = x - s;
+    firstDevPlus = x + s;
+    secondDevMinus = x - (2 * s);
+    secondDevPlus = (2 * s) + x;
+    thirdDevMinus =x - (3 * s);
+    thirdDevPlus = (3 * s) + x; 
+    firstDevMinus = parseFloat(firstDevMinus.toFixed(2));
+    firstDevPlus = parseFloat(firstDevPlus.toFixed(2));
+    secondDevMinus = parseFloat(secondDevMinus.toFixed(2));
+    secondDevPlus = parseFloat(secondDevPlus.toFixed(2));
+    thirdDevMinus = parseFloat(thirdDevMinus.toFixed(2));
+    thirdDevPlus = parseFloat(thirdDevPlus.toFixed(2));
     
-    return ['\n',
+    console.log(['\n',
     ['                                                       .                                   '], '\n',
     ['                                                   .   |   .                               '], '\n',
-    [`                             ${firstDevMinus}    .     |     .  ${firstDevPlus}                      `], '\n',
+    [`                                x - s :  ${firstDevMinus}    .     |     .  x + s : ${firstDevPlus}                      `], '\n',
     ['                                                .      |      .                            '], '\n',
     ['                                               .       |       .                           '], '\n',
     ['                                              .        |        .                          '], '\n',
     ['                                             .         |         .                         '], '\n',
     ['                                            .          |          .                        '], '\n',
     ['                                           .           |           .                         '], '\n',
-    [`                     ${secondDevMinus}    .            |             .  ${secondDevPlus}             `], '\n',
+    [`                         x - 2s : ${secondDevMinus}    .            |             .  x + 2s : ${secondDevPlus}             `], '\n',
     ['                                       .               |                .                  '], '\n',
     ['                                   .                   |                    .              '], '\n',
-    [`         ${thirdDevMinus}    .                         |                           . ${thirdDevPlus}`], '\n']
+    [`            x - 3s : ${thirdDevMinus}    .                         |                           . x + 3s : ${thirdDevPlus}`], '\n'])
+    variables = [firstDevMinus, secondDevMinus, thirdDevMinus, firstDevPlus, secondDevPlus, thirdDevPlus];
+    return variables;
 }
 
     module.exports = smplBellCurve;

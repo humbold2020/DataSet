@@ -1,6 +1,7 @@
 const prompt = require('prompt-sync')();
 const mergeSort = require('./mergeSort');
 const smplBellCurve = require('./diagrams');
+let variables = [];
 
 class DataSet {
     constructor(array) {
@@ -175,7 +176,11 @@ const sample = new DataSet([1,1,2,2,3,4,5,5,6,7,8,9])
 const Mean = parseFloat(sample3.getMean().toFixed(2));
 const sd = parseFloat(sample3.getStdDev('s', 'sd').toFixed(2));
 console.log('mean:', Mean);
-console.log(smplBellCurve(Mean, sd));
+variables = smplBellCurve(Mean, sd);
+
+console.log(variables[3] + variables[2]);
+
+
 
 
 
