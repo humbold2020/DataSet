@@ -2,7 +2,6 @@ const mergeSort = require('./mergeSort');
 class DataSet {
     constructor(array) {
         this.dataset = array;
-        this.size = 0;
     }
     sort() {
         console.log('Sorted Data Set:',mergeSort(this.dataset));
