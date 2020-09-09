@@ -37,6 +37,7 @@ class DataSet {
         }
     }
     getStdDev() {
+        // prompt is not needed if parameters are set up
         let smplPop = prompt('Is the data set a population, or a sample of one? (s | sample OR p | population):');
         let stdVar = prompt('Would you like the Standard Deviation or the variance? (type sd | standard deviation OR v | variance):');
         const lowerSmplPop = smplPop.toLowerCase();
