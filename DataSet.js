@@ -65,7 +65,7 @@ class DataSet {
             if (lowerStdVar === 'sd') {
                 const stdDev = sqdDevAboutMeanAdded => {
                     const result = sqdDevAboutMeanAdded / (this.dataset.length - 1);
-                    return Math.sqrt(result), result;
+                    return Math.sqrt(result);
                 }
                 console.log('Sample Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
             } else if (lowerStdVar === 'v') {
@@ -84,18 +84,21 @@ class DataSet {
         }
     }
 }
-
+// HELPER FUNCTIONS
+// helper function to add together all elements within a list
 const add = population => {
     return population.reduce((acc, cur) => {
         return acc + cur;
     });
 }
 
+// helper function that finds the mean of a list
 const mean = population => {
     const added = add(population);
     return added / population.length;
 }
 
+// helper function that returns
 const devAboutMean = population => {
     const deviations = [];
     const Mean = mean(population);
