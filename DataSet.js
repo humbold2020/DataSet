@@ -1,5 +1,6 @@
 const prompt = require('prompt-sync')();
 const mergeSort = require('./mergeSort');
+const smplBellCurve = require('./diagrams');
 
 class DataSet {
     constructor(array) {
@@ -162,22 +163,8 @@ const sample3 = new DataSet([0.82,
     0.81]);
 const sample = new DataSet([1,1,2,2,3,4,5,5,6,7,8,9])
 sample3.getStdDev('s', 'sd');
-bellCurve = ['\n',
-    ['                                           .                                   '], '\n',
-    ['                                       .   |   .                               '], '\n',
-    ['                            x - s    .     |     .  x + s                      '], '\n',
-    ['                                    .      |      .                            '], '\n',
-    ['                                   .       |       .                           '], '\n',
-    ['                                  .        |        .                          '], '\n',
-    ['                                 .         |         .                         '], '\n',
-    ['                                .          |          .                        '], '\n',
-    ['                               .           |           .                       '], '\n',
-    ['                    x - 2s    .            |             .  x + 2s             '], '\n',
-    ['                          .                |                .                  '], '\n',
-    ['                       .                   |                    .              '], '\n',
-    ['       x - 3s    .                         |                           . x + 3s'], '\n']
+console.log(smplBellCurve);
 
-console.log(bellCurve);
 
 
 
