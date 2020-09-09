@@ -5,6 +5,11 @@ class DataSet {
     constructor(array) {
         this.dataset = array;
     }
+
+    original() {
+        console.log('Original Data Set:', this.dataset);
+    }
+
     sort() {
         console.log('Sorted Data Set:',mergeSort(this.dataset));
         return mergeSort(this.dataset);
@@ -54,6 +59,7 @@ class DataSet {
                 console.log('Population Variance:', variance(sqdDevAboutMeanAdded));
             } else {
                 console.log('Please choose either sd for standard deviation or v for variance.');
+                this.getStdDev();
             }
         } else if (lowerSmplPop === 's') {
             if (lowerStdVar === 'sd') {
@@ -70,9 +76,11 @@ class DataSet {
                 console.log('Sample Variance:', variance(sqdDevAboutMeanAdded));
             } else {
                 console.log('Please choose either sd for standard deviation or v for variance.');
+                this.getStdDev();
             }  
         } else {
-            return 'Please state whether the data set is a population or a sample of one.';
+            console.log('Please state whether the data set is a population or a sample of one.');
+            this.getStdDev();
         }
     }
 }
@@ -103,9 +111,13 @@ for (let i=0; i<15; i++) {
     data.push(randomize());
 }
 const dataSet = new DataSet(data);
+dataSet.original();
 dataSet.sort();
 dataSet.getMean();
 dataSet.getMedian();
+dataSet.getStdDev();
+dataSet.getStdDev();
+dataSet.getStdDev();
 dataSet.getStdDev();
 
 
