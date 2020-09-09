@@ -7,11 +7,12 @@ class DataSet {
     }
 
     original() {
-        console.log('Original Data Set:', this.dataset);
+        //console.log('Original Data Set:', this.dataset);
+        return this.dataset;
     }
 
     sort() {
-        console.log('Sorted Data Set:',mergeSort(this.dataset));
+        //console.log('Sorted Data Set:',mergeSort(this.dataset));
         return mergeSort(this.dataset);
     }
 
@@ -113,15 +114,70 @@ const randomize = () => Math.floor(Math.random() * 10);
 for (let i=0; i<15; i++) {
     data.push(randomize());
 }
-const dataSet = new DataSet(data);
-dataSet.original();
-dataSet.sort();
-dataSet.getMean();
-dataSet.getMedian();
-dataSet.getStdDev();
-dataSet.getStdDev();
-dataSet.getStdDev();
-dataSet.getStdDev();
+//const population = new DataSet([87, 80, 82, 61, 64, 68, 89, 60, 86]);
+//const sample1 = new DataSet([80, 86, 61]);
+//const sample2 = new DataSet([64, 80, 89]);
+const sample3 = new DataSet([0.82,
+    0.88,
+    0.86,
+    0.83,
+    0.83,
+    0.88,
+    0.98,
+    0.84,
+    0.82,
+    0.84,
+    0.81,
+    0.85,
+    0.75,
+    0.88,
+    0.95,
+    0.84,
+    0.71,
+    0.81,
+    0.73,
+    0.82,
+    0.93,
+    0.76,
+    0.77,
+    0.94,
+    0.84,
+    0.92,
+    0.87,
+    0.86,
+    0.83,
+    0.79,
+    0.97,
+    0.82,
+    0.77,
+    0.74,
+    0.83,
+    0.79,
+    0.85,
+    0.85,
+    0.87,
+    0.76,
+    0.73,
+    0.94,
+    0.72,
+    0.73,
+    0.83,
+    0.83,
+    0.88,
+    0.92,
+    0.91,
+    0.81]);
+
+let sample = sample3.sort();
+console.log(sample);
+let trimmed = sample.filter(individual => {
+    if (individual >= 0.91) {
+        return individual;
+    }
+});
+console.log(trimmed.length / sample.length);
+sample3.getMean();
+
 
 
 
