@@ -1,6 +1,6 @@
 const prompt = require('prompt-sync')();
-
 const mergeSort = require('./mergeSort');
+
 class DataSet {
     constructor(array) {
         this.dataset = array;
