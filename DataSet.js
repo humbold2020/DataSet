@@ -161,8 +161,23 @@ const sample3 = new DataSet([0.82,
     0.91,
     0.81]);
 const sample = new DataSet([1,1,2,2,3,4,5,5,6,7,8,9])
-sample.getStdDev('s', 'sd');
+sample3.getStdDev('s', 'sd');
+bellCurve = ['\n',
+    ['                                           .                                   '], '\n',
+    ['                                       .   |   .                               '], '\n',
+    ['                            x - s    .     |     .  x + s                      '], '\n',
+    ['                                    .      |      .                            '], '\n',
+    ['                                   .       |       .                           '], '\n',
+    ['                                  .        |        .                          '], '\n',
+    ['                                 .         |         .                         '], '\n',
+    ['                                .          |          .                        '], '\n',
+    ['                               .           |           .                       '], '\n',
+    ['                    x - 2s    .            |             .  x + 2s             '], '\n',
+    ['                          .                |                .                  '], '\n',
+    ['                       .                   |                    .              '], '\n',
+    ['       x - 3s    .                         |                           . x + 3s'], '\n']
 
+console.log(bellCurve);
 
 
 
