@@ -37,23 +37,19 @@ class DataSet {
             return sortedData[median];
         }
     }
-    getStdDev() {
+    getStdDev(smplPop, sdV) {
         // prompt is not needed if parameters are set up
-        let smplPop = prompt('Is the data set a population, or a sample of one? (s | sample OR p | population):');
-        let stdVar = prompt('Would you like the Standard Deviation or the variance? (type sd | standard deviation OR v | variance):');
-        const lowerSmplPop = smplPop.toLowerCase();
-        const lowerStdVar = stdVar.toLowerCase();
         const sqdDevAboutMeanAdded = add(devAboutMean(this.dataset).map(individual => {
             return individual * individual;
         }));
-        if (lowerSmplPop === 'p') { 
-            if (lowerStdVar === 'sd') {
+        if (smplPop === 'p' || smplPop === 'P') { 
+            if (sdV === 'sd' || sdV === 'SD') {
                 const stdDev = sqdDevAboutMeanAdded => {
                     const result = sqdDevAboutMeanAdded / this.dataset.length;
                     return Math.sqrt(result);
                 }
                 console.log('Population Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
-            } else if (lowerStdVar === 'v') {
+            } else if (sdV === 'v' || sdV === V) {
                 const variance = sqdDevAboutMeanAdded => {
                     const result = sqdDevAboutMeanAdded / this.dataset.length;
                     return result;
@@ -61,16 +57,15 @@ class DataSet {
                 console.log('Population Variance:', variance(sqdDevAboutMeanAdded));
             } else {
                 console.log('Please choose either sd for standard deviation or v for variance.');
-                this.getStdDev();
             }
-        } else if (lowerSmplPop === 's') {
-            if (lowerStdVar === 'sd') {
+        } else if (smplPop === 's' || smplPop === 'S' ) {
+            if (sdV === 'sd' || sdV === 'SD') {
                 const stdDev = sqdDevAboutMeanAdded => {
                     const result = sqdDevAboutMeanAdded / (this.dataset.length - 1);
                     return Math.sqrt(result);
                 }
                 console.log('Sample Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
-            } else if (lowerStdVar === 'v') {
+            } else if (sdV === 'v' || sdV === 'V') {
                 const variance = sqdDevAboutMeanAdded => {
                     const result = sqdDevAboutMeanAdded / (this.dataset.length - 1);
                     return result;
@@ -78,11 +73,9 @@ class DataSet {
                 console.log('Sample Variance:', variance(sqdDevAboutMeanAdded));
             } else {
                 console.log('Please choose either sd for standard deviation or v for variance.');
-                this.getStdDev();
             }  
         } else {
             console.log('Please state whether the data set is a population or a sample of one.');
-            this.getStdDev();
         }
     }
 }
@@ -167,16 +160,8 @@ const sample3 = new DataSet([0.82,
     0.92,
     0.91,
     0.81]);
-
-let sample = sample3.sort();
-console.log(sample);
-let trimmed = sample.filter(individual => {
-    if (individual >= 0.91) {
-        return individual;
-    }
-});
-console.log(trimmed.length / sample.length);
-sample3.getMean();
+const sample = new DataSet([1,1,2,2,3,4,5,5,6,7,8,9])
+sample.getStdDev('s', 'sd');
 
 
 
