@@ -39,15 +39,7 @@ const add = population => {
         return acc + cur;
     });
 }
-const data = [];
-const randomize = () => Math.floor(Math.random() * 1000);
-for (let i=0; i<14; i++) {
-    data.push(randomize());
-}
-const dataSet = new DataSet(data);
-dataSet.sort();
-dataSet.getMean();
-dataSet.getMedian();
+
 
 
 
