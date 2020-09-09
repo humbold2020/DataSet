@@ -18,7 +18,7 @@ class DataSet {
     }
 
     getMean() {
-        console.log('Mean:', mean(this.dataset));
+        //console.log('Mean:', mean(this.dataset));
         return mean(this.dataset);
     }
 
@@ -40,44 +40,44 @@ class DataSet {
     }
     getStdDev(smplPop, sdV) {
         // prompt is not needed if parameters are set up
+        let result;
         const sqdDevAboutMeanAdded = add(devAboutMean(this.dataset).map(individual => {
             return individual * individual;
         }));
         if (smplPop === 'p' || smplPop === 'P') { 
             if (sdV === 'sd' || sdV === 'SD') {
-                const stdDev = sqdDevAboutMeanAdded => {
-                    const result = sqdDevAboutMeanAdded / this.dataset.length;
-                    return Math.sqrt(result);
-                }
-                console.log('Population Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
+                return stdDev(sqdDevAboutMeanAdded);
+                //console.log('Population Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
             } else if (sdV === 'v' || sdV === V) {
-                const variance = sqdDevAboutMeanAdded => {
-                    const result = sqdDevAboutMeanAdded / this.dataset.length;
-                    return result;
-                }
-                console.log('Population Variance:', variance(sqdDevAboutMeanAdded));
+                return variance(sqdDevAboutMeanAdded);
+                //console.log('Population Variance:', variance(sqdDevAboutMeanAdded));
             } else {
-                console.log('Please choose either sd for standard deviation or v for variance.');
+                //console.log('Please choose either sd for standard deviation or v for variance.');
+                return;
             }
         } else if (smplPop === 's' || smplPop === 'S' ) {
             if (sdV === 'sd' || sdV === 'SD') {
                 const stdDev = sqdDevAboutMeanAdded => {
-                    const result = sqdDevAboutMeanAdded / (this.dataset.length - 1);
-                    return Math.sqrt(result);
-                }
-                console.log('Sample Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
-            } else if (sdV === 'v' || sdV === 'V') {
-                const variance = sqdDevAboutMeanAdded => {
-                    const result = sqdDevAboutMeanAdded / (this.dataset.length - 1);
+                    result = Math.sqrt(sqdDevAboutMeanAdded / (this.dataset.length - 1));
                     return result;
                 }
-                console.log('Sample Variance:', variance(sqdDevAboutMeanAdded));
+                return stdDev(sqdDevAboutMeanAdded);
+                //console.log('Sample Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
+            } else if (sdV === 'v' || sdV === 'V') {
+                const variance = sqdDevAboutMeanAdded => {
+                    result = sqdDevAboutMeanAdded / (this.dataset.length - 1);
+                    return result;
+                }
+                return variance(sqdDevAboutMeanAdded);
+                //console.log('Sample Variance:', variance(sqdDevAboutMeanAdded));
             } else {
-                console.log('Please choose either sd for standard deviation or v for variance.');
+                //console.log('Please choose either sd for standard deviation or v for variance.');
+                return;
             }  
         } else {
-            console.log('Please state whether the data set is a population or a sample of one.');
-        }
+            //console.log('Please state whether the data set is a population or a sample of one.');
+            return;
+        };
     }
 }
 // HELPER FUNCTIONS
@@ -101,6 +101,16 @@ const devAboutMean = population => {
         return individual - Mean;
     });
     return deviations;
+}
+
+const stdDev = sqdDevAboutMeanAdded => {
+    result = Math.sqrt(sqdDevAboutMeanAdded / this.dataset.length);
+    return result;
+}
+
+const variance = sqdDevAboutMeanAdded => {
+    result = sqdDevAboutMeanAdded / this.dataset.length;
+    return result;
 }
 
 const data = [];
@@ -162,8 +172,12 @@ const sample3 = new DataSet([0.82,
     0.91,
     0.81]);
 const sample = new DataSet([1,1,2,2,3,4,5,5,6,7,8,9])
-sample3.getStdDev('s', 'sd');
-console.log(smplBellCurve);
+const Mean = parseFloat(sample3.getMean().toFixed(2));
+const sd = parseFloat(sample3.getStdDev('s', 'sd').toFixed(2));
+console.log('mean:', Mean);
+console.log(smplBellCurve(Mean, sd));
+
+
 
 
 
