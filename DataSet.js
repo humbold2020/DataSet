@@ -100,7 +100,6 @@ const mean = population => {
 
 // helper function that returns
 const devAboutMean = population => {
-    //const deviations = [];
     const Mean = mean(population);
     const deviations = population.map(individual => {
         return individual - Mean;
