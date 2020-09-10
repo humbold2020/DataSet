@@ -175,7 +175,7 @@ class DataSet {
         return `data between ${lowerDev} and ${upperDev} are within ${deviations} deviations of the mean`;
     }
     
-    z_score (val1, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
+    z_score(val1, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
         const diff = val1 - mean;
         return diff / sd;
     }
@@ -288,8 +288,8 @@ console.log(Mean + (1.5 * sd));
 console.log(sample3.chebyIneq(4));
 console.log(sample3.chebyIneq(2.5));
 console.log(sample3.dataBtwnDevs(2.5));
-console.log(sample3.numStdDevs(3.42, 3.58, 0.08));
-console.log(sample3.numStdDevs(3.74, 3.58, 0.08));
+console.log(sample3.z_score(3.42, 3.58, 0.08));
+console.log(sample3.z_score(3.74, 3.58, 0.08));
 console.log(sample3.chebyIneq(2));
 
 
