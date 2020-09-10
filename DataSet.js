@@ -132,22 +132,29 @@ class DataSet {
         }
         
     }
-    getPercentage(data1, data2) {
+    getPercentage(startData = null, endData = null) {
         const sortedData = mergeSort(this.dataset);
-        if (sortedData.includes(data1) && sortedData.includes(data2)) {
-            if (data1 < data2) {
+        if (startData && endData) {
+            if (startData < endData) {
                 let trimmedData = sortedData.filter(individual => {
-                    if (individual > data1 && individual < data2) {
+                    if (individual >= startData && individual <= endData) {
                         return individual;
                     }
                 });
-                return trimmedData;
+                const trimmedCount = trimmedData.length;
+                const populationCount = sortedData.length;
+                return ((trimmedCount / populationCount) * 100) + '%'; 
             } else {
                 return '1 not less than 2';
             }
+        } else if (!startData && endData) {
+            return 'no start';
+        } else if (!endData && startData) {
+            return 'no end';
         } else {
-            return 'one or more data not included in dataset';
+            return 'need a value';
         }
+            
     }
 }
 // HELPER FUNCTIONS
@@ -246,7 +253,8 @@ let sd = parseFloat(sample3.getStdDev('s', 'sd').toFixed(2));
 //console.log(sd);
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
-console.log(sample3.getPercentage(0.92, 0.85));
+console.log(sample3.getPercentage(0.85));
+console.log(sample3.empericalRule(1));
 
 
 

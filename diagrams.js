@@ -12,7 +12,7 @@ const smplBellCurve = (x, s, printDiagram = false) => {
     thirdDevMinus = parseFloat(thirdDevMinus.toFixed(2));
     thirdDevPlus = parseFloat(thirdDevPlus.toFixed(2));
     if (printDiagram === true) {
-    console.log(['\n',
+    return ['\n',
     ['                                                       .                                   '], '\n',
     ['                                                   .   |   .                               '], '\n',
     [`                                x - s :  ${firstDevMinus}    .     |     .  x + s : ${firstDevPlus}                      `], '\n',
@@ -25,7 +25,7 @@ const smplBellCurve = (x, s, printDiagram = false) => {
     [`                         x - 2s : ${secondDevMinus}    .            |             .  x + 2s : ${secondDevPlus}             `], '\n',
     ['                                       .               |                .                  '], '\n',
     ['                                   .                   |                    .              '], '\n',
-    [`            x - 3s : ${thirdDevMinus}    .                         |                           . x + 3s : ${thirdDevPlus}`], '\n'])
+    [`            x - 3s : ${thirdDevMinus}    .                         |                           . x + 3s : ${thirdDevPlus}`], '\n']
     } else {
     variables = [firstDevMinus, firstDevPlus , secondDevMinus, secondDevPlus, thirdDevMinus, thirdDevPlus];
     return variables;
