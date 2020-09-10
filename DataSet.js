@@ -1,7 +1,12 @@
 //const prompt = require('prompt-sync')();
 const mergeSort = require('./mergeSort');
 const smplBellCurve = require('./diagrams');
-let variables;
+let firstDevMinus;
+let firstDevPlus;
+let secondDevMinus;
+let secondDevPlus;
+let thirdDevMinus;
+let thirdDevPlus;
 
 class DataSet {
     constructor(array) {
@@ -76,9 +81,69 @@ class DataSet {
                 return;
             }  
         } else {
-            //console.log('Please state whether the data set is a population or a sample of one.');
+            console.log('Please state whether the data set is a population or a sample of one.');
             return;
-        };
+        }
+    }
+    empericalRule(devInfo) {
+        const Mean = parseFloat(this.getMean().toFixed(2));
+        const sd = parseFloat(this.getStdDev('s', 'sd').toFixed(2));
+        let variables = smplBellCurve(Mean, sd);
+        const assignVariables = varName => {
+            switch (varName) {
+                case 'fdm':
+                    return variables[0];
+                    break;
+                case 'fdp':
+                    return variables[1];
+                    break;
+                case 'sdm':
+                    return variables[2];
+                    break;
+                case 'sdp':
+                    return variables[3];
+                    break;
+                case 'tdm':
+                    return variables[4];
+                    break;
+                case 'tdp':
+                    return variables[5];
+                    break;
+            }
+        }
+        let floats;
+        for (let i = 0; i < this.dataset.length; i++) {
+            if (typeof this.dataset[i] === 'float') {
+                return floats = true;
+            }
+        }
+        if (floats === true) {
+            firstDevMinus = assignVariables('fdm');
+            firstDevPlus = assignVariables('fdp');
+            secondDevMinus = assignVariables('sdm');
+            secondDevPlus = assignVariables('sdp');
+            thirdDevMinus = assignVariables('tdm');
+            thirdDevPlus = assignVariables('tdp');
+        } else {
+            firstDevMinus = parseInt(assignVariables('fdm'));
+            firstDevPlus = parseInt(assignVariables('fdp'));
+            secondDevMinus = parseInt(assignVariables('sdm'));
+            secondDevPlus = parseInt(assignVariables('sdp'));
+            thirdDevMinus = parseInt(assignVariables('tdm'));
+            thirdDevPlus = parseInt(assignVariables('tdp'));
+        }
+        
+        console.log("(if data's graph is not bell-shaped, emperical rule does not work)");
+        if (devInfo === 1) {
+            return `Approximately 68% of the data between ${firstDevMinus} and ${firstDevPlus} are within 1 standard deviation from the mean`;
+        } else if (devInfo === 2) {
+            return `Approximately 95% of the data between ${secondDevMinus} and ${secondDevPlus} are within 2 standard deviations from the mean`;
+        } else if (devInfo === 3) {
+            return `Approximately 99.7% of the data between ${thirdDevMinus} and ${thirdDevPlus} are withing 3 standard deviations from the mean`;
+        } else {
+            return 'Please enter a the number of standard deviations you would like to return';
+        }
+        
     }
 }
 // HELPER FUNCTIONS
@@ -172,14 +237,12 @@ const sample3 = new DataSet([0.82,
     0.92,
     0.91,
     0.81]);
-const sample = new DataSet([1,1,2,2,3,4,5,5,6,7,8,9])
-const Mean = parseFloat(sample3.getMean().toFixed(2));
-const sd = parseFloat(sample3.getStdDev('s', 'sd').toFixed(2));
+const sample = new DataSet([1,1,2,2,3,4,5,5,6,7,8,9]);
+console.log(parseInt(sample.getMean().toFixed(0)));
+console.log(parseInt(sample.getStdDev('s', 'sd').toFixed(0)));
+console.log(sample.empericalRule(3));
 
 
-console.log('stdDev:',sd);
-variables = smplBellCurve(Mean, sd);
-console.log(variables);
 
 
 
