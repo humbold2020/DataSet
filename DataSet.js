@@ -280,6 +280,7 @@ console.log('Mean', numbers.getMean());
 console.log('Median', numbers.getMedian());
 console.log('Standard Deviation', numbers.getStdDev('s', 'sd'));
 console.log('data between', numbers.dataBtwnDevs(2))
+console.log(numbers.empericalRule(1,true))
 //console.log(sd);
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
