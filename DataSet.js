@@ -175,8 +175,8 @@ class DataSet {
         return `data between ${lowerDev} and ${upperDev} are within ${deviations} deviations of the mean`;
     }
     
-    numStdDevs(val1, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
-        const diff = Math.abs(val1 - mean);
+    z_score (val1, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
+        const diff = val1 - mean;
         return diff / sd;
     }
     chebyIneq(deviations) {
