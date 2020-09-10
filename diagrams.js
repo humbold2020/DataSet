@@ -26,7 +26,7 @@ const smplBellCurve = (x, s) => {
     ['                                       .               |                .                  '], '\n',
     ['                                   .                   |                    .              '], '\n',
     [`            x - 3s : ${thirdDevMinus}    .                         |                           . x + 3s : ${thirdDevPlus}`], '\n'])
-    variables = [firstDevMinus, secondDevMinus, thirdDevMinus, firstDevPlus, secondDevPlus, thirdDevPlus];
+    variables = [firstDevMinus, firstDevPlus , secondDevMinus, secondDevPlus, thirdDevMinus, thirdDevPlus];
     return variables;
 }
 
