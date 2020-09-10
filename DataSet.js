@@ -88,7 +88,6 @@ class DataSet {
     empericalRule(devInfo) {
         const Mean = this.getMean();
         const sd = parseFloat(this.getStdDev('s', 'sd').toFixed(2));
-        console.log(smplBellCurve(Mean, sd, true))
         let variables = smplBellCurve(Mean, sd);
         const assignVariables = varName => {
             switch (varName) {
@@ -143,18 +142,48 @@ class DataSet {
                 });
                 const trimmedCount = trimmedData.length;
                 const populationCount = sortedData.length;
-                return ((trimmedCount / populationCount) * 100) + '%'; 
+                return (trimmedCount / populationCount) * 100; 
             } else {
                 return '1 not less than 2';
             }
         } else if (!startData && endData) {
-            return 'no start';
+            let trimmedData = sortedData.filter(individual => {
+                if (individual < endData) {
+                    return individual;
+                }
+            });
+            const trimmedCount = trimmedData.length;
+            const populationCount = sortedData.length;
+            return (trimmedCount / populationCount) * 100;
         } else if (!endData && startData) {
-            return 'no end';
+            let trimmedData = sortedData.filter(individual => {
+                if (individual > startData) {
+                    return individual;
+                }
+            });
+            const trimmedCount = trimmedData.length;
+            const populationCount = sortedData.length;
+            return (trimmedCount / populationCount) * 100;
         } else {
             return 'need a value';
         }
             
+    }
+    dataBtwnDevs(deviations, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
+        const lowerDev = mean - (deviations * (sd));
+        const upperDev = mean + (deviations * (sd));
+        return `data between ${lowerDev} and ${upperDev} are within ${deviations} deviations of the mean`;
+    }
+    
+    numStdDevs(val1, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
+        const diff = Math.abs(val1 - mean);
+        return diff / sd;
+    }
+    chebyIneq(deviations) {
+        return (1 - (1 / (deviations * deviations))) * 100;
+    }
+    dispBellCurve() {
+        console.log(smplBellCurve(Mean, sd, true))
     }
 }
 // HELPER FUNCTIONS
@@ -198,63 +227,73 @@ for (let i=0; i<15; i++) {
 //const population = new DataSet([87, 80, 82, 61, 64, 68, 89, 60, 86]);
 //const sample1 = new DataSet([80, 86, 61]);
 //const sample2 = new DataSet([64, 80, 89]);
-const sample3 = new DataSet([0.82,
-    0.88,
+const sample3 = new DataSet([0.99,
     0.86,
-    0.83,
-    0.83,
-    0.88,
-    0.98,
-    0.84,
-    0.82,
-    0.84,
     0.81,
-    0.85,
-    0.75,
+    0.82,
+    0.81,
+    0.87,
+    0.99,
+    0.87,
+    0.93,
+    0.94,
+    0.81,
+    0.86,
+    0.78,
     0.88,
-    0.95,
-    0.84,
+    0.97,
+    0.85,
     0.71,
     0.81,
-    0.73,
+    0.75,
     0.82,
-    0.93,
-    0.76,
-    0.77,
-    0.94,
-    0.84,
     0.92,
-    0.87,
+    0.76,
+    0.75,
+    0.92,
+    0.81,
+    0.95,
     0.86,
-    0.83,
-    0.79,
-    0.97,
-    0.82,
-    0.77,
-    0.74,
-    0.83,
-    0.79,
-    0.85,
-    0.85,
-    0.87,
+    0.88,
+    0.84,
     0.76,
+    0.99,
+    0.82,
+    0.78,
+    0.77,
+    0.82,
+    0.78,
+    0.84,
+    0.85,
+    0.89,
+    0.77,
     0.73,
     0.94,
+    0.74,
     0.72,
-    0.73,
-    0.83,
-    0.83,
-    0.88,
-    0.92,
-    0.91,
+    0.81,
+    0.82,
+    0.89,
+    0.93,
+    0.93,
     0.81]);
-let Mean = sample3.getMean();
-let sd = parseFloat(sample3.getStdDev('s', 'sd').toFixed(2));
+let Mean = 3.42;
+let sd = 0.08;
 //console.log(sd);
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
-console.log(sample3.getPercentage(0.85));
-console.log(sample3.empericalRule(1));
+console.log(sd);
+console.log(Mean - (1.5 * sd));
+console.log(Mean + (1.5 * sd));
+console.log(sample3.chebyIneq(4));
+console.log(sample3.chebyIneq(2.5));
+console.log(sample3.dataBtwnDevs(2.5));
+console.log(sample3.numStdDevs(3.42, 3.58, 0.08));
+console.log(sample3.numStdDevs(3.74, 3.58, 0.08));
+console.log(sample3.chebyIneq(2));
+
+
+
 
 
 
