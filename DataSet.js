@@ -76,7 +76,11 @@ class DataSet {
             return;
         }
     }
-    empericalRule(devInfo) {
+    empericalRule(devInfo, printDiagram = false) {
+        if (printDiagram === true) {
+            return smplBellCurve(this.getMean(), this.getStdDev('s', 'sd'), true);
+            
+        }
         const Mean = this.getMean();
         const sd = parseFloat(this.getStdDev('s', 'sd').toFixed(2));
         let variables = smplBellCurve(Mean, sd);
@@ -273,8 +277,7 @@ let sd = 0.08;
 //console.log(sd);
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
-console.log(sample3.empericalRule(11));
-console.log(sample3.dataBtwnDevs(2));
+console.log(sample3.empericalRule(2, true));
 
 
 
