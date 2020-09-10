@@ -14,17 +14,14 @@ class DataSet {
     }
 
     original() {
-        //console.log('Original Data Set:', this.dataset);
         return this.dataset;
     }
 
     sort() {
-        //console.log('Sorted Data Set:',mergeSort(this.dataset));
         return mergeSort(this.dataset);
     }
 
     getMean() {
-        //console.log('Mean:', mean(this.dataset));
         return mean(this.dataset);
     }
 
@@ -53,12 +50,9 @@ class DataSet {
         if (smplPop === 'p' || smplPop === 'P') { 
             if (sdV === 'sd' || sdV === 'SD') {
                 return stdDev(sqdDevAboutMeanAdded);
-                //console.log('Population Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
             } else if (sdV === 'v' || sdV === V) {
                 return variance(sqdDevAboutMeanAdded);
-                //console.log('Population Variance:', variance(sqdDevAboutMeanAdded));
             } else {
-                //console.log('Please choose either sd for standard deviation or v for variance.');
                 return;
             }
         } else if (smplPop === 's' || smplPop === 'S' ) {
@@ -68,16 +62,13 @@ class DataSet {
                     return result;
                 }
                 return stdDev(sqdDevAboutMeanAdded);
-                //console.log('Sample Standard Deviation:', stdDev(sqdDevAboutMeanAdded));
             } else if (sdV === 'v' || sdV === 'V') {
                 const variance = sqdDevAboutMeanAdded => {
                     result = sqdDevAboutMeanAdded / (this.dataset.length - 1);
                     return result;
                 }
                 return variance(sqdDevAboutMeanAdded);
-                //console.log('Sample Variance:', variance(sqdDevAboutMeanAdded));
             } else {
-                //console.log('Please choose either sd for standard deviation or v for variance.');
                 return;
             }  
         } else {
@@ -127,7 +118,7 @@ class DataSet {
         } else if (devInfo === 3) {
             return `Approximately 99.7% of the data between ${thirdDevMinus} and ${thirdDevPlus} are withing 3 standard deviations from the mean`;
         } else {
-            return 'Please enter a the number of standard deviations you would like to return';
+            return 'Please enter the number of standard deviations you would like to return';
         }
         
     }
@@ -282,15 +273,8 @@ let sd = 0.08;
 //console.log(sd);
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
-console.log(sd);
-console.log(Mean - (1.5 * sd));
-console.log(Mean + (1.5 * sd));
-console.log(sample3.chebyIneq(4));
-console.log(sample3.chebyIneq(2.5));
-console.log(sample3.dataBtwnDevs(2.5));
-console.log(sample3.z_score(3.42, 3.58, 0.08));
-console.log(sample3.z_score(3.74, 3.58, 0.08));
-console.log(sample3.chebyIneq(2));
+console.log(sample3.empericalRule(11));
+console.log(sample3.dataBtwnDevs(2));
 
 
 
