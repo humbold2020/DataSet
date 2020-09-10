@@ -86,8 +86,9 @@ class DataSet {
         }
     }
     empericalRule(devInfo) {
-        const Mean = parseFloat(this.getMean().toFixed(2));
+        const Mean = this.getMean();
         const sd = parseFloat(this.getStdDev('s', 'sd').toFixed(2));
+        console.log(smplBellCurve(Mean, sd, true))
         let variables = smplBellCurve(Mean, sd);
         const assignVariables = varName => {
             switch (varName) {
@@ -111,27 +112,13 @@ class DataSet {
                     break;
             }
         }
-        let floats;
-        for (let i = 0; i < this.dataset.length; i++) {
-            if (typeof this.dataset[i] === 'float') {
-                return floats = true;
-            }
-        }
-        if (floats === true) {
-            firstDevMinus = assignVariables('fdm');
-            firstDevPlus = assignVariables('fdp');
-            secondDevMinus = assignVariables('sdm');
-            secondDevPlus = assignVariables('sdp');
-            thirdDevMinus = assignVariables('tdm');
-            thirdDevPlus = assignVariables('tdp');
-        } else {
-            firstDevMinus = parseInt(assignVariables('fdm'));
-            firstDevPlus = parseInt(assignVariables('fdp'));
-            secondDevMinus = parseInt(assignVariables('sdm'));
-            secondDevPlus = parseInt(assignVariables('sdp'));
-            thirdDevMinus = parseInt(assignVariables('tdm'));
-            thirdDevPlus = parseInt(assignVariables('tdp'));
-        }
+        
+        firstDevMinus = assignVariables('fdm');
+        firstDevPlus = assignVariables('fdp');
+        secondDevMinus = assignVariables('sdm');
+        secondDevPlus = assignVariables('sdp');
+        thirdDevMinus = assignVariables('tdm');
+        thirdDevPlus = assignVariables('tdp');
         
         console.log("(if data's graph is not bell-shaped, emperical rule does not work)");
         if (devInfo === 1) {
@@ -144,6 +131,23 @@ class DataSet {
             return 'Please enter a the number of standard deviations you would like to return';
         }
         
+    }
+    getPercentage(data1, data2) {
+        const sortedData = mergeSort(this.dataset);
+        if (sortedData.includes(data1) && sortedData.includes(data2)) {
+            if (data1 < data2) {
+                let trimmedData = sortedData.filter(individual => {
+                    if (individual > data1 && individual < data2) {
+                        return individual;
+                    }
+                });
+                return trimmedData;
+            } else {
+                return '1 not less than 2';
+            }
+        } else {
+            return 'one or more data not included in dataset';
+        }
     }
 }
 // HELPER FUNCTIONS
@@ -237,10 +241,13 @@ const sample3 = new DataSet([0.82,
     0.92,
     0.91,
     0.81]);
-const sample = new DataSet([1,1,2,2,3,4,5,5,6,7,8,9]);
-console.log(parseInt(sample.getMean().toFixed(0)));
-console.log(parseInt(sample.getStdDev('s', 'sd').toFixed(0)));
-console.log(sample.empericalRule(3));
+let Mean = sample3.getMean();
+let sd = parseFloat(sample3.getStdDev('s', 'sd').toFixed(2));
+//console.log(sd);
+//console.log(Mean);
+//console.log(sample3.empericalRule(1));
+console.log(sample3.getPercentage(0.92, 0.85));
+
 
 
 
