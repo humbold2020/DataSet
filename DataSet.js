@@ -215,8 +215,9 @@ const variance = sqdDevAboutMeanAdded => {
 }
 
 const data = [];
-const randomize = () => Math.floor(Math.random() * 10);
-for (let i=0; i<15; i++) {
+let listNumbers = 100;
+const randomize = () => Math.floor(Math.random() * 75);
+for (let i=0; i<listNumbers; i++) {
     data.push(randomize());
 }
 //const population = new DataSet([87, 80, 82, 61, 64, 68, 89, 60, 86]);
@@ -272,12 +273,17 @@ const sample3 = new DataSet([0.99,
     0.93,
     0.93,
     0.81]);
-let Mean = 3.42;
-let sd = 0.08;
+const numbers = new DataSet(data);
+console.log('Unsorted List', numbers.original());
+console.log('Sorted List', numbers.sort());
+console.log('Mean', numbers.getMean());
+console.log('Median', numbers.getMedian());
+console.log('Standard Deviation', numbers.getStdDev('s', 'sd'));
+console.log('data between', numbers.dataBtwnDevs(2))
 //console.log(sd);
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
-console.log(sample3.empericalRule(2, true));
+
 
 
 
