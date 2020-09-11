@@ -190,13 +190,13 @@ class DataSet {
         }
         switch (quartiles) {
             case 'Q1':
-                return Q1;
+                return `25% of the data are less than or eqaul to the first quartile, ${Q1}, and 75% of the data is greater than ${Q1}.`;
                 break;
             case 'Q2':
-                return Q2;
+                return `50% of the data are less than or eqaul to the second quartile, ${Q2}, which is also the median of the dataset, and 50% of the data is greater than ${Q2}.`;
                 break;
             case 'Q3':
-                return Q3;
+                return `75% of the data are less than or eqaul to the third quartile, ${Q3}, and 25% of the data is greater than ${Q3}.`;
                 break;
             default:
                 return 'Please specify which quartile you would like to return';
