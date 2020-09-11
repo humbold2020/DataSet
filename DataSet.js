@@ -26,7 +26,17 @@ class DataSet {
     }
 
     getMedian() {
-        if (this.dataset.length % 2 === 0) {
+        const sorted = this.sort();
+        const medIndex = medianIndex(this);
+        let med;
+        if (sorted.length % 2 === 0) {
+            med = (sorted[medIndex] + sorted[medIndex + 1]) / 2;
+        } else {
+            med = sorted[medIndex];
+        }
+        return med;
+        
+        /*if (this.dataset.length % 2 === 0) {
             const sortedData = mergeSort(this.dataset);
             const medMean = [];
             const data1 = Math.floor((sortedData.length - 1) / 2);
@@ -39,7 +49,7 @@ class DataSet {
             const median = (sortedData.length - 1) / 2;
             console.log('Median:', sortedData[median]);
             return sortedData[median];
-        }
+        }*/
     }
     getStdDev(smplPop, sdV) {
         // prompt is not needed if parameters are set up
@@ -299,6 +309,7 @@ const sample3 = new DataSet([0.99,
 const numbers = new DataSet(data);
 console.log('Sorted List:', numbers.sort());
 console.log('Median Index', medianIndex(numbers));
+console.log('Median', numbers.getMedian());
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
 
