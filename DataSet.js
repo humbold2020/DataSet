@@ -175,17 +175,47 @@ class DataSet {
             
     }
 
-    getQuartiles() {  
+    getQuartiles(quartiles) {  
         const sorted = this.sort();
         const length = sorted.length;
         let medIndex1 = medianIndex(this);
+        let leftArray;
+        let rightArray;
+        let Q1;
         let Q2;
+        let Q3;
         if (length % 2 === 0) {
             Q2 = (sorted[medIndex1] + sorted[medIndex1 + 1]) / 2;
+            leftArray = new DataSet(sorted.slice(0, medIndex1 + 1));
+            rightArray = new DataSet(sorted.slice(medIndex1 + 1, length));
+            let leftMedIndex = medianIndex(leftArray);
+            let rightMedIndex = medianIndex(rightArray);
+            Q1 = leftArray.original()[leftMedIndex];
+            Q3 = rightArray.original()[rightMedIndex];
         } else {
             Q2 = (sorted[medIndex1]);
+            leftArray = new DataSet(sorted.slice(0, medIndex1));
+            rightArray = new DataSet(sorted.slice(medIndex1 + 1, length));
+            let xl = leftArray.original()[medianIndex(leftArray)];
+            let yl = leftArray.original()[medianIndex(leftArray) + 1];
+            let xr = rightArray.original()[medianIndex(rightArray)];
+            let yr = rightArray.original()[medianIndex(rightArray) + 1];
+            Q1 = (xl + yl) / 2;
+            Q3 = (xr + yr) / 2;   
         }
-        console.log(Q2);     
+        switch (quartiles) {
+            case 'Q1':
+                return Q1;
+                break;
+            case 'Q2':
+                return Q2;
+                break;
+            case 'Q3':
+                return Q3;
+                break;
+            default:
+                return 'Please specify which quartile you would like to return';
+        }
     }
 
     dataBtwnDevs(deviations, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
@@ -316,7 +346,9 @@ const sample3 = new DataSet([0.99,
     0.81]);
 const numbers = new DataSet(data);
 console.log('Sorted List:', numbers.sort());
-console.log(numbers.getQuartiles());
+console.log('First Quartile:', numbers.getQuartiles('Q1'));
+console.log('Second Quartile:', numbers.getQuartiles('Q2'));
+console.log('Third Quartile:', numbers.getQuartiles('Q3'));
 //console.log('Median Index', medianIndex(numbers));
 //console.log('Median', numbers.getMedian());
 //console.log(Mean);
