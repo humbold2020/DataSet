@@ -159,8 +159,11 @@ class DataSet {
         }
             
     }
+    quickStats() {
+        return `N: ${this.dataset.length}  Mean: ${this.getMean()}  StDev: ${this.getStdDev('s', 'sd')}  Minimum: ${this.sort()[0]}  Q1: ${this.getQuartiles('Q1', true)}  Median: ${this.getMedian()}  Q3: ${this.getQuartiles('Q3', true)}  Maximum: ${this.sort()[this.sort().length - 1]}`;
+    }
 
-    getQuartiles(quartiles) {  
+    getQuartiles(quartiles, vals = false) {  
         const sorted = this.sort();
         const length = sorted.length;
         let medIndex1 = medianIndex(this);
@@ -188,19 +191,39 @@ class DataSet {
             Q1 = (xl + yl) / 2;
             Q3 = (xr + yr) / 2;   
         }
-        switch (quartiles) {
-            case 'Q1':
-                return `25% of the data are less than or eqaul to the first quartile, ${Q1}, and 75% of the data is greater than ${Q1}.`;
-                break;
-            case 'Q2':
-                return `50% of the data are less than or eqaul to the second quartile, ${Q2}, which is also the median of the dataset, and 50% of the data is greater than ${Q2}.`;
-                break;
-            case 'Q3':
-                return `75% of the data are less than or eqaul to the third quartile, ${Q3}, and 25% of the data is greater than ${Q3}.`;
-                break;
-            default:
-                return 'Please specify which quartile you would like to return';
+        if (vals === false) {
+            switch (quartiles) {
+                case 'Q1':
+                    return `25% of the data are less than or eqaul to the first quartile, ${Q1}, and 75% of the data is greater than ${Q1}.`;
+                    break;
+                case 'Q2':
+                    return `50% of the data are less than or eqaul to the second quartile, ${Q2}, which is also the median of the dataset, and 50% of the data is greater than ${Q2}.`;
+                    break;
+                case 'Q3':
+                    return `75% of the data are less than or eqaul to the third quartile, ${Q3}, and 25% of the data is greater than ${Q3}.`;
+                    break;
+                default:
+                    return 'Please specify which quartile you would like to return';
+            }
+        } else {
+            switch (quartiles) {
+                case 'Q1':
+                    return Q1;
+                    break;
+                case 'Q2':
+                    return Q2;
+                    break;
+                case 'Q3':
+                    return Q3;
+                    break;
+                default:
+                    return 'Please specify which quartile you would like to return';
+            }
         }
+        
+    }
+    getIQR() {
+        return this.getQuartiles('Q3', true) - this.getQuartiles('Q1', true);
     }
 
     dataBtwnDevs(deviations, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
@@ -331,9 +354,11 @@ const sample3 = new DataSet([0.99,
     0.81]);
 const numbers = new DataSet([6751, 9908, 3461, 2336, 21147,2332, 189, 1185, 370, 1414, 4668, 1953, 10034, 735, 618, 802, 180, 1657]);
 console.log('Sorted List:', numbers.sort());
-console.log('First Quartile:', numbers.getQuartiles('Q1'));
+console.log('First Quartile:', numbers.getQuartiles('Q1', true));
 console.log('Second Quartile:', numbers.getQuartiles('Q2'));
-console.log('Third Quartile:', numbers.getQuartiles('Q3'));
+console.log('Third Quartile:', numbers.getQuartiles('Q3', true));
+console.log('IQR:', numbers.getIQR());
+console.log(numbers.quickStats());
 //console.log('Median Index', medianIndex(numbers));
 //console.log('Median', numbers.getMedian());
 //console.log(Mean);
