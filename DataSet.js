@@ -176,10 +176,8 @@ class DataSet {
     }
 
     getQuartiles() {
-        
-        
-
-        
+        const sorted = this.sort();
+        console.log('sorted:', sorted); 
     }
     dataBtwnDevs(deviations, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
         const lowerDev = mean - (deviations * (sd));
