@@ -329,7 +329,7 @@ const sample3 = new DataSet([0.99,
     0.93,
     0.93,
     0.81]);
-const numbers = new DataSet(data);
+const numbers = new DataSet([6751, 9908, 3461, 2336, 21147,2332, 189, 1185, 370, 1414, 4668, 1953, 10034, 735, 618, 802, 180, 1657]);
 console.log('Sorted List:', numbers.sort());
 console.log('First Quartile:', numbers.getQuartiles('Q1'));
 console.log('Second Quartile:', numbers.getQuartiles('Q2'));
