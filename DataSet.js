@@ -33,7 +33,7 @@ class DataSet {
             const data2 = Math.floor(sortedData.length / 2);
             medMean.push(sortedData[data1], sortedData[data2]);
             const median = mean(medMean);
-            console.log('median:',median)
+            return median;
         } else {
             const sortedData = mergeSort(this.dataset);
             const median = (sortedData.length - 1) / 2;
@@ -164,6 +164,11 @@ class DataSet {
         }
             
     }
+
+    getQuartiles() {
+        let med = this.getMedian();
+        return med;
+    }
     dataBtwnDevs(deviations, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
         const lowerDev = mean - (deviations * (sd));
         const upperDev = mean + (deviations * (sd));
@@ -275,13 +280,8 @@ const sample3 = new DataSet([0.99,
     0.81]);
 const numbers = new DataSet(data);
 console.log('Unsorted List', numbers.original());
-console.log('Sorted List', numbers.sort());
-console.log('Mean', numbers.getMean());
-console.log('Median', numbers.getMedian());
-console.log('Standard Deviation', numbers.getStdDev('s', 'sd'));
-console.log('data between', numbers.dataBtwnDevs(2))
-console.log(numbers.empericalRule(1,true))
-//console.log(sd);
+console.log('sorted:', numbers.sort());
+console.log(numbers.getQuartiles());
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
 
