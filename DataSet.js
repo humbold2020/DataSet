@@ -35,21 +35,6 @@ class DataSet {
             med = sorted[medIndex];
         }
         return med;
-        
-        /*if (this.dataset.length % 2 === 0) {
-            const sortedData = mergeSort(this.dataset);
-            const medMean = [];
-            const data1 = Math.floor((sortedData.length - 1) / 2);
-            const data2 = Math.floor(sortedData.length / 2);
-            medMean.push(sortedData[data1], sortedData[data2]);
-            const median = mean(medMean);
-            return median;
-        } else {
-            const sortedData = mergeSort(this.dataset);
-            const median = (sortedData.length - 1) / 2;
-            console.log('Median:', sortedData[median]);
-            return sortedData[median];
-        }*/
     }
     getStdDev(smplPop, sdV) {
         // prompt is not needed if parameters are set up
