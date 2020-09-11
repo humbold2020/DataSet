@@ -159,6 +159,44 @@ class DataSet {
         }
             
     }
+
+    getOutliers(ret, type) {
+        let lowerOutliers;
+        let upperOutliers;
+        const Q1 = this.getQuartiles('Q1', true);
+        const Q3 = this.getQuartiles('Q3', true);
+        const IQR = this.getIQR();
+        const LF = Q1 - (1.5 * IQR);
+        const UF = Q3 + (1.5 * IQR);
+        if (ret === 'lf') {
+            return LF;
+        } else if (ret === 'uf') {
+            return UF;
+        } else if (ret === 'info') {
+            console.log(`Data that is less than the Lower Fence of ${LF} and greater than the Upper Fence of ${UF} are considered outliers`);
+        } else if (ret === 'outliers') {
+            if (type === 'lf') {
+                lowerOutliers = this.sort().filter(individual => {
+                    if (individual < LF) {
+                        return individual;
+                    }
+                });
+                return 'Outliers Below Lower Fence:', lowerOutliers;
+            } else if (type === 'uf') {
+                upperOutliers = this.sort().filter(individual => {
+                    if (individual > UF) {
+                        return individual;
+                    }
+                });
+                return 'Outliers Above Upper Fence:', upperOutliers;
+            } else {
+                return 'Please specify which outlier you would like to return. (after first argument: outliers, specify: lf | for list of lower outliers OR uf | for list of upper outliers.';
+            }  
+        } else { 
+            return 'Please specify whether to return the lower fence, upper fence, or a list of outliers. (give as argument: lf | lower fence  uf | upper fence  outlier | list of outliers)';
+        }
+    }
+
     quickStats() {
         return `N: ${this.dataset.length}  Mean: ${this.getMean()}  StDev: ${this.getStdDev('s', 'sd')}  Minimum: ${this.sort()[0]}  Q1: ${this.getQuartiles('Q1', true)}  Median: ${this.getMedian()}  Q3: ${this.getQuartiles('Q3', true)}  Maximum: ${this.sort()[this.sort().length - 1]}`;
     }
@@ -359,6 +397,10 @@ console.log('Second Quartile:', numbers.getQuartiles('Q2'));
 console.log('Third Quartile:', numbers.getQuartiles('Q3', true));
 console.log('IQR:', numbers.getIQR());
 console.log(numbers.quickStats());
+console.log(numbers.getOutliers('lf'));
+console.log(numbers.getOutliers('uf'));
+console.log(numbers.getOutliers('outliers', 'uf'));
+
 //console.log('Median Index', medianIndex(numbers));
 //console.log('Median', numbers.getMedian());
 //console.log(Mean);
