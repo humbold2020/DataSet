@@ -175,10 +175,19 @@ class DataSet {
             
     }
 
-    getQuartiles() {
+    getQuartiles() {  
         const sorted = this.sort();
-        console.log('sorted:', sorted); 
+        const length = sorted.length;
+        let medIndex1 = medianIndex(this);
+        let Q2;
+        if (length % 2 === 0) {
+            Q2 = (sorted[medIndex1] + sorted[medIndex1 + 1]) / 2;
+        } else {
+            Q2 = (sorted[medIndex1]);
+        }
+        console.log(Q2);     
     }
+
     dataBtwnDevs(deviations, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
         const lowerDev = mean - (deviations * (sd));
         const upperDev = mean + (deviations * (sd));
@@ -230,24 +239,25 @@ const variance = sqdDevAboutMeanAdded => {
 }
 const medianIndex = dataset => {
     let sorted;
+    let medIndex
     if (dataset instanceof DataSet) {
         sorted = dataset.sort();
     } else {
         return 'please makesure dataset is an instance of the DataSet class';
     }
     if (sorted.length % 2 === 0) {
-        let medIndex = Math.floor((sorted.length - 1) / 2);;   
+        medIndex = Math.floor((sorted.length - 1) / 2);;   
         return medIndex;
     } else {
-       let medIndex = (sorted.length - 1) / 2;
+       medIndex = (sorted.length - 1) / 2;
        return medIndex;
     }
 }
         
 
 const data = [];
-let listNumbers = 9;
-const randomize = () => Math.floor(Math.random() * 8);
+let listNumbers = 10;
+const randomize = () => Math.floor(Math.random() * 100);
 for (let i=0; i<listNumbers; i++) {
     data.push(randomize());
 }
@@ -306,8 +316,9 @@ const sample3 = new DataSet([0.99,
     0.81]);
 const numbers = new DataSet(data);
 console.log('Sorted List:', numbers.sort());
-console.log('Median Index', medianIndex(numbers));
-console.log('Median', numbers.getMedian());
+console.log(numbers.getQuartiles());
+//console.log('Median Index', medianIndex(numbers));
+//console.log('Median', numbers.getMedian());
 //console.log(Mean);
 //console.log(sample3.empericalRule(1));
 
