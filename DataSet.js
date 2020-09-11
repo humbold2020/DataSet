@@ -167,7 +167,8 @@ class DataSet {
 
     getQuartiles() {
         let med = this.getMedian();
-        return med;
+        let sorted = this.sort();
+        return sorted;
     }
     dataBtwnDevs(deviations, mean = this.getMean(), sd = this.getStdDev('s', 'sd')) {
         const lowerDev = mean - (deviations * (sd));
