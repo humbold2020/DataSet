@@ -204,30 +204,27 @@ class DataSet {
     getQuartiles(quartiles, vals = false) {  
         const sorted = this.sort();
         const length = sorted.length;
-        let medIndex1 = medianIndex(this);
+        let medIndex = medianIndex(this);
         let leftArray;
         let rightArray;
         let Q1;
         let Q2;
         let Q3;
         if (length % 2 === 0) {
-            Q2 = (sorted[medIndex1] + sorted[medIndex1 + 1]) / 2;
-            leftArray = new DataSet(sorted.slice(0, medIndex1 + 1));
-            rightArray = new DataSet(sorted.slice(medIndex1 + 1, length));
-            let leftMedIndex = medianIndex(leftArray);
-            let rightMedIndex = medianIndex(rightArray);
-            Q1 = leftArray.original()[leftMedIndex];
-            Q3 = rightArray.original()[rightMedIndex];
+            leftArray = sorted.slice(0, medIndex + 1);
+            rightArray = sorted.slice(medIndex + 1, length);
+            Q2 = (sorted[medIndex] + sorted[medIndex + 1]) / 2;
         } else {
-            Q2 = (sorted[medIndex1]);
-            leftArray = new DataSet(sorted.slice(0, medIndex1));
-            rightArray = new DataSet(sorted.slice(medIndex1 + 1, length));
-            let xl = leftArray.original()[medianIndex(leftArray)];
-            let yl = leftArray.original()[medianIndex(leftArray) + 1];
-            let xr = rightArray.original()[medianIndex(rightArray)];
-            let yr = rightArray.original()[medianIndex(rightArray) + 1];
-            Q1 = (xl + yl) / 2;
-            Q3 = (xr + yr) / 2;   
+            leftArray = sorted.slice(0, medIndex);
+            rightArray = sorted.slice(medIndex + 1, sorted.length);
+            Q2 = (sorted[medIndex]);  
+        }
+        if (leftArray.length % 2 === 0) {
+            Q1 = (leftArray[medianIndex(leftArray)] + leftArray[medianIndex(leftArray) + 1]) / 2;
+            Q3 = (rightArray[medianIndex(rightArray)] + rightArray[medianIndex(rightArray) + 1]) / 2;
+        } else {
+            Q1 = leftArray[medianIndex(leftArray)];
+            Q3 = rightArray[medianIndex(rightArray)];
         }
         if (vals === false) {
             switch (quartiles) {
@@ -315,21 +312,15 @@ const variance = sqdDevAboutMeanAdded => {
 }
 const medianIndex = dataset => {
     let sorted;
-    let medIndex
+    let medIndex;
     if (dataset instanceof DataSet) {
-        sorted = dataset.sort();
+        sorted = this.sort();
     } else {
-        return 'please makesure dataset is an instance of the DataSet class';
+        sorted = mergeSort(dataset);
     }
-    if (sorted.length % 2 === 0) {
-        medIndex = Math.floor((sorted.length - 1) / 2);;   
-        return medIndex;
-    } else {
-       medIndex = (sorted.length - 1) / 2;
-       return medIndex;
-    }
-}
-        
+    medIndex = Math.floor((sorted.length - 1) / 2);
+    return medIndex;
+} 
 
 const data = [];
 let listNumbers = 10;
@@ -393,6 +384,7 @@ const sample3 = new DataSet([0.99,
 const numbers = new DataSet([2.12, 0.28, 1.48, 0.36, 0.23, 2.52, 1.7, 2.56, 0.23, 1.02, 0, 1.8, 3.23, 0.44, 2.36, 3.64, 0.79, 0.7, 1.07, 3.16, 0, 0.28, 0, 2.32, 2.93, 0, 2.04, 2.74]);
 console.log(numbers.quickStats());
 console.log(numbers.sort());
+console.log(numbers.getQuartiles('Q3', true));
 //console.log('Median Index', medianIndex(numbers));
 //console.log('Median', numbers.getMedian());
 //console.log(Mean);
