@@ -44,9 +44,9 @@ class DataSet {
         }));
         if (smplPop === 'p' || smplPop === 'P') { 
             if (sdV === 'sd' || sdV === 'SD') {
-                return stdDev(sqdDevAboutMeanAdded);
+                return stdDev(sqdDevAboutMeanAdded, this.dataset);
             } else if (sdV === 'v' || sdV === V) {
-                return variance(sqdDevAboutMeanAdded);
+                return variance(sqdDevAboutMeanAdded,);
             } else {
                 return;
             }
@@ -71,13 +71,12 @@ class DataSet {
             return;
         }
     }
-    empericalRule(devInfo, printDiagram = false) {
+    empericalRule(devInfo, mean = this.getMean(), sd = parseFloat(this.getStdDev('s', 'sd').toFixed(2)), printDiagram = false) {
         if (printDiagram === true) {
             return smplBellCurve(this.getMean(), this.getStdDev('s', 'sd'), true);
             
         }
-        const Mean = this.getMean();
-        const sd = parseFloat(this.getStdDev('s', 'sd').toFixed(2));
+        const Mean = mean;
         let variables = smplBellCurve(Mean, sd);
         const assignVariables = varName => {
             switch (varName) {
@@ -197,8 +196,15 @@ class DataSet {
         }
     }
 
+    getRange(dataset = this.dataset) {
+        const sorted = mergeSort(dataset);
+        const min = sorted[0];
+        const max = sorted[sorted.length - 1];
+        return max - min;
+    } 
+
     quickStats() {
-        return `N: ${this.dataset.length}  Mean: ${this.getMean()}  StDev: ${this.getStdDev('s', 'sd')}  Minimum: ${this.sort()[0]}  Q1: ${this.getQuartiles('Q1', true)}  Median: ${this.getMedian()}  Q3: ${this.getQuartiles('Q3', true)}  Maximum: ${this.sort()[this.sort().length - 1]}`;
+        return `N: ${this.dataset.length}  Mean: ${this.getMean()}  StDev: ${this.getStdDev('s', 'sd')}  PopStDev: ${this.getStdDev('p', 'sd')}  Minimum: ${this.sort()[0]}  Q1: ${this.getQuartiles('Q1', true)}  Median: ${this.getMedian()}  Q3: ${this.getQuartiles('Q3', true)}  Maximum: ${this.sort()[this.sort().length - 1]}  Range: ${this.getRange()}`;
     }
 
     getQuartiles(quartiles, vals = false) {  
@@ -301,13 +307,13 @@ const devAboutMean = population => {
     return deviations;
 }
 
-const stdDev = sqdDevAboutMeanAdded => {
-    result = Math.sqrt(sqdDevAboutMeanAdded / this.dataset.length);
+const stdDev = (sqdDevAboutMeanAdded, dataset) => {
+    result = Math.sqrt(sqdDevAboutMeanAdded / dataset.length);
     return result;
 }
 
-const variance = sqdDevAboutMeanAdded => {
-    result = sqdDevAboutMeanAdded / this.dataset.length;
+const variance = (sqdDevAboutMeanAdded, dataset) => {
+    result = sqdDevAboutMeanAdded / dataset.length;
     return result;
 }
 const medianIndex = dataset => {
@@ -322,70 +328,89 @@ const medianIndex = dataset => {
     return medIndex;
 } 
 
-const data = [];
+/*const data = [];
 let listNumbers = 10;
 const randomize = () => Math.floor(Math.random() * 100);
 for (let i=0; i<listNumbers; i++) {
     data.push(randomize());
-}
+}*/
 //const population = new DataSet([87, 80, 82, 61, 64, 68, 89, 60, 86]);
 //const sample1 = new DataSet([80, 86, 61]);
 //const sample2 = new DataSet([64, 80, 89]);
-const sample3 = new DataSet([0.99,
-    0.86,
-    0.81,
-    0.82,
-    0.81,
-    0.87,
-    0.99,
-    0.87,
-    0.93,
-    0.94,
-    0.81,
-    0.86,
-    0.78,
-    0.88,
-    0.97,
-    0.85,
-    0.71,
-    0.81,
-    0.75,
-    0.82,
-    0.92,
-    0.76,
-    0.75,
-    0.92,
-    0.81,
-    0.95,
-    0.86,
-    0.88,
-    0.84,
-    0.76,
-    0.99,
-    0.82,
-    0.78,
-    0.77,
-    0.82,
-    0.78,
-    0.84,
-    0.85,
-    0.89,
-    0.77,
-    0.73,
-    0.94,
-    0.74,
-    0.72,
-    0.81,
-    0.82,
-    0.89,
-    0.93,
-    0.93,
-    0.81]);
+const sample3 = new DataSet([0.604,
+    0.606,
+    0.602,
+    0.599,
+    0.598,
+    0.599,
+    0.611,
+    0.598,
+    0.600,
+    0.600,
+    0.601,
+    0.600,
+    0.604]);
+const car1 = new DataSet([232,
+    230,
+    236,
+    232,
+    238,
+    283,
+    293,
+    158,
+    258,
+    251,
+    174,
+    314,
+    260,
+    302,
+    289]);
+const car2 = new DataSet([203,
+    242,
+    227,
+    232,
+    259,
+    251,
+    206,
+    256,
+    252,
+    275,
+    265,
+    243,
+    251,
+    289,
+    285])
 const numbers = new DataSet([2.12, 0.28, 1.48, 0.36, 0.23, 2.52, 1.7, 2.56, 0.23, 1.02, 0, 1.8, 3.23, 0.44, 2.36, 3.64, 0.79, 0.7, 1.07, 3.16, 0, 0.28, 0, 2.32, 2.93, 0, 2.04, 2.74]);
-console.log(numbers.quickStats());
-console.log(numbers.sort());
-console.log(numbers.getQuartiles('Q3', true));
-console.log(numbers.quickStats());
+console.log('car1:', car1.quickStats());
+console.log('car2:', car2.quickStats());
+console.log('car1:', car1.sort());
+console.log('car2:', car2.sort());
+console.log(car1.empericalRule(1, 100, 13));
+console.log(car1.empericalRule(2, 100, 13));
+console.log(car1.empericalRule(3, 100, 13));
+console.log(car1.z_score(2.98, 5.092, 0.924));
+console.log(car1.z_score(3.45, 4.083, 0.631));
+const data = new DataSet([54,
+    52,
+    41,
+    65,
+    43,
+    62,
+    49,
+    50,
+    48,
+    48,
+    61,
+    69,
+    58,
+    57,
+    55]);
+console.log(data.quickStats());
+
+
+
+
+
 //console.log('Median Index', medianIndex(numbers));
 //console.log('Median', numbers.getMedian());
 //console.log(Mean);
