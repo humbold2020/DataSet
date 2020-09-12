@@ -390,17 +390,9 @@ const sample3 = new DataSet([0.99,
     0.93,
     0.93,
     0.81]);
-const numbers = new DataSet([6751, 9908, 3461, 2336, 21147,2332, 189, 1185, 370, 1414, 4668, 1953, 10034, 735, 618, 802, 180, 1657]);
-console.log('Sorted List:', numbers.sort());
-console.log('First Quartile:', numbers.getQuartiles('Q1', true));
-console.log('Second Quartile:', numbers.getQuartiles('Q2'));
-console.log('Third Quartile:', numbers.getQuartiles('Q3', true));
-console.log('IQR:', numbers.getIQR());
+const numbers = new DataSet([2.12, 0.28, 1.48, 0.36, 0.23, 2.52, 1.7, 2.56, 0.23, 1.02, 0, 1.8, 3.23, 0.44, 2.36, 3.64, 0.79, 0.7, 1.07, 3.16, 0, 0.28, 0, 2.32, 2.93, 0, 2.04, 2.74]);
 console.log(numbers.quickStats());
-console.log(numbers.getOutliers('lf'));
-console.log(numbers.getOutliers('uf'));
-console.log(numbers.getOutliers('outliers', 'uf'));
-
+console.log(numbers.sort());
 //console.log('Median Index', medianIndex(numbers));
 //console.log('Median', numbers.getMedian());
 //console.log(Mean);
