@@ -314,7 +314,7 @@ const medianIndex = dataset => {
     let sorted;
     let medIndex;
     if (dataset instanceof DataSet) {
-        sorted = this.sort();
+        sorted = dataset.sort();
     } else {
         sorted = mergeSort(dataset);
     }
@@ -385,6 +385,7 @@ const numbers = new DataSet([2.12, 0.28, 1.48, 0.36, 0.23, 2.52, 1.7, 2.56, 0.23
 console.log(numbers.quickStats());
 console.log(numbers.sort());
 console.log(numbers.getQuartiles('Q3', true));
+console.log(numbers.quickStats());
 //console.log('Median Index', medianIndex(numbers));
 //console.log('Median', numbers.getMedian());
 //console.log(Mean);
