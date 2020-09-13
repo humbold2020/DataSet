@@ -201,7 +201,27 @@ class DataSet {
         const min = sorted[0];
         const max = sorted[sorted.length - 1];
         return max - min;
-    } 
+    }
+
+    getMode(dataset = this.original()) {
+        if (dataset.filter((x, index) => {
+            return dataset.indexOf(x) === index;
+        }).length === dataset.length) {
+            return dataset;
+        } else {
+            return this.getMode(dataset.sort((x, index) => {
+                x - index;
+            }).map((x, index) => {
+                if (dataset.indexOf(x) !== index) {
+                    return x;
+                } else {
+                    return null;
+                }
+            }).filter(x => {
+                return x !== null;
+            }));
+        }
+    }
 
     quickStats() {
         return `N: ${this.dataset.length}  Mean: ${this.getMean()}  StDev: ${this.getStdDev('s', 'sd')}  PopStDev: ${this.getStdDev('p', 'sd')}  Minimum: ${this.sort()[0]}  Q1: ${this.getQuartiles('Q1', true)}  Median: ${this.getMedian()}  Q3: ${this.getQuartiles('Q3', true)}  Maximum: ${this.sort()[this.sort().length - 1]}  Range: ${this.getRange()}`;
@@ -328,6 +348,14 @@ const medianIndex = dataset => {
     return medIndex;
 } 
 
+const data = [];
+const randomize = () => Math.floor(Math.random() * 5);
+for (let i = 0; i < 20; i++) {
+    data.push(randomize());
+};
+const dataset = new DataSet(data);
+console.log('Original:', dataset.original(), 'Sorted:', dataset.sort());
+console.log('Mode:', dataset.getMode());
 
 
 
