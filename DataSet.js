@@ -195,6 +195,41 @@ class DataSet {
             return 'Please specify whether to return the lower fence, upper fence, or a list of outliers. (give as argument: lf | lower fence  uf | upper fence  outlier | list of outliers)';
         }
     }
+    getFrequency(value, dataset = this.original()) {
+        let valIndex = dataset.indexOf(value);
+        if (dataset.includes(valIndex)) {
+            const filtered = dataset.filter(individual => {
+                return individual === value;
+            });
+            let count = 0;
+            filtered.forEach(individual => {
+                count++;
+            });
+            return count;
+        } else {
+            return `The value ${value} is not located within the dataset`;
+        }
+        //console.log('Index:', valIndex, 'value:', dataset[valIndex]);
+        
+    }
+
+    getRelFrequency(value, dataset = this.original()) {
+        let valIndex = dataset.indexOf(value);
+        if (dataset.includes(valIndex)) {
+            const filtered = dataset.filter(individual => {
+                return individual === value;
+            });
+            let count = 0;
+            filtered.forEach(individual => {
+                count++;
+            });
+            return count / dataset.length;
+        } else {
+            return `The value ${value} is not located within the dataset`;
+        }
+        
+
+    }
 
     getRange(dataset = this.dataset) {
         const sorted = mergeSort(dataset);
@@ -359,13 +394,13 @@ const medianIndex = dataset => {
 } 
 
 const data = [];
-const randomize = () => Math.floor(Math.random() * 5);
+const randomize = () => Math.floor(Math.random() * 10);
 for (let i = 0; i < 20; i++) {
     data.push(randomize());
 };
 const dataset = new DataSet(data);
 console.log('Original:', dataset.original(), 'Sorted:', dataset.sort());
-console.log('Mode:', dataset.getMode());
+console.log(dataset.getRelFrequency(6));
 
 
 
