@@ -202,22 +202,32 @@ class DataSet {
         const max = sorted[sorted.length - 1];
         return max - min;
     }
-
+    // comments used to describe this method because it is slightly confusing at first glance. this becomes even more confusing when using ES6 syntax for shorter code.
     getMode(dataset = this.original()) {
+        // conditional statement checks to see if calling .indexOf() on each member of the array will result in a index match. Because of the property of the method that only recalls the first instance of the value within the dataset, this will effectively let show whether the list contains any multiple values.
+        // the filter statement creates a new list full of values that pass the test case. 
         if (dataset.filter((x, index) => {
             return dataset.indexOf(x) === index;
         }).length === dataset.length) {
+            // if the filtered list is the same length as the original dataset, we know for sure that each number is unique within the dataset. 
+            // the function returns the original dataset if this is truthy.
             return dataset;
         } else {
+            // we know that there are multiple iterations of a value if the dataset is filtered by the filter call back function.
+            // since .fliter() does not change the original array, it is perfectly fine to use it to check for a boolean value with out altering the performance of the function.
+            // if the filter method returns a different sized array, then a recursive case is called that will first sort the original dataset.
             return this.getMode(dataset.sort((x, index) => {
                 x - index;
             }).map((x, index) => {
+                // after the dataset is sorted, another array is mapped from the sorted array that will use the .indexOf() method again in order to return the value if it is by its the first observation of the value, or null if the first observation of that value is saved to a different index.
                 if (dataset.indexOf(x) !== index) {
                     return x;
                 } else {
                     return null;
                 }
             }).filter(x => {
+                // Lastly, a filter is applied to the mapped dataset that returns all values that are not equal to null.
+                // since our program recursively nulls out all numbers that are not its first occcurance, the last number to be nulled out will inevitably be the number that occurs the most times within the original dataset.
                 return x !== null;
             }));
         }
