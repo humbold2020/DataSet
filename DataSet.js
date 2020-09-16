@@ -272,6 +272,25 @@ class DataSet {
         return `N: ${this.dataset.length}  Mean: ${this.getMean()}  StDev: ${this.getStdDev('s', 'sd')}  PopStDev: ${this.getStdDev('p', 'sd')}  Minimum: ${this.sort()[0]}  Q1: ${this.getQuartiles('Q1', true)}  Median: ${this.getMedian()}  Q3: ${this.getQuartiles('Q3', true)}  Maximum: ${this.sort()[this.sort().length - 1]}  Range: ${this.getRange()}`;
     }
 
+    getRelFreq(data = this.original(), value = 'all') {
+        let addedData = add(data);
+        if (value === 'all') {
+            return data.forEach(individual => {
+                let relFreq = individual / addedData;
+                console.log(`${data.indexOf(individual) + 1} : ${individual} : ${relFreq}`);
+            })
+        } else {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i] === value) {
+                    return value / addedData;
+                };
+                if (!data.includes(value)) {
+                    return `${value} is not located within the data set.`;
+                }
+            }
+        }
+    }
+
     getQuartiles(quartiles, vals = false) {  
         const sorted = this.sort();
         const length = sorted.length;
@@ -346,7 +365,7 @@ class DataSet {
         return (1 - (1 / (deviations * deviations))) * 100;
     }
     dispBellCurve() {
-        console.log(smplBellCurve(Mean, sd, true))
+        console.log(smplBellCurve(this.getMean(), this.getStdDev('s', 'sd'), true))
     }
 }
 // HELPER FUNCTIONS
@@ -393,32 +412,14 @@ const medianIndex = dataset => {
     return medIndex;
 } 
 
-const data = [];
-const randomize = () => Math.floor(Math.random() * 10);
+//const data = [];
+/*const randomize = () => Math.floor(Math.random() * 10);
 for (let i = 0; i < 20; i++) {
     data.push(randomize());
-};
-const dataset = new DataSet(data);
-console.log('Original:', dataset.original(), 'Sorted:', dataset.sort());
-console.log(dataset.getRelFrequency(6));
+};*/
+//const dataset = new DataSet([41.6, 64.4, 3.1, 11.0, 2.4, 36.9, 63.1, 11.2, 14.4, 3.2]);
+//const data = {'one': 5, 'two': 11, 'three': 88, 'four': 183, 'five': 230, 'six': 204, 'seven': 123, 'eightUp': 156};
+const dataset = new DataSet([5, 11, 88, 183, 230, 204, 123, 156]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(dataset.getRelFreq(undefined));
 
